@@ -1,4 +1,6 @@
-object Exercices {
+package funcscala
+
+object chapter2 {
   //EXERCISE 1 (optional): Write a function to get the nth Fibonacci number. 
   // The first two Fibonacci numbers are 0 and 1,
   // and the next number is always the sum of
