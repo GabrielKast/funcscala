@@ -9,6 +9,9 @@ version := "1.0"
 scalaVersion := "2.10.1"
 
 // Add a single dependency
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
+
+
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
 // Exclude backup files by default.  This uses ~=, which accepts a function of
