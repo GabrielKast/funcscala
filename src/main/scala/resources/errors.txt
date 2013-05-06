@@ -1,0 +1,5 @@
+Chapter 3
+
+Exercice 1 : 
+* case Cons(h, t) => h + sum(t) // should be List.sum(t)
+
