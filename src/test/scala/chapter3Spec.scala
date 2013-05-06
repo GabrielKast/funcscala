@@ -64,4 +64,18 @@ class Chapter3Spec extends FunSpec {
       }
     }
   }
+
+  describe ("Exercice 6 : keep about but the last element of a list") {
+    it("should return the 4 first of the list") {
+      assert(init(List(1, 2, 3, 4, 5))===List(1, 2, 3, 4))
+    }
+    it("should return Nil") {
+      assert(init(List(1))===Nil)
+    }
+    it("should throw an exception") {
+      intercept[UnsupportedOperationException] {
+	init(Nil)
+      }
+    }
+  }
 }

@@ -48,4 +48,14 @@ object chapter3 {
     case Nil => throw new UnsupportedOperationException
     case Cons(_, tail) => Cons(a, tail)
   }
+
+  // EXERCISE 6: Implement a function, init, which returns a List consisting 
+  // of all but the last element of a List. 
+  // So, given List(1,2,3,4), init will return List(1,2,3).
+  // Why can't this function be implemented in constant time like tail?
+  def init[A](l: List[A]): List[A] = l match {
+    case Nil => throw new UnsupportedOperationException
+    case Cons(a, Nil ) => Nil
+    case Cons(a, b) => Cons(a, init(b))
+  }
 }
