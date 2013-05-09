@@ -19,4 +19,15 @@ object List {
   val example = Cons(1, Cons(2, Cons(3, Nil)))
   val example2 = List(1,2,3)
   val total = sum(example)
+
+
+  def foldRight[A,B](l: List[A], z: B)(f: (A, B) => B): B =
+    l match {
+      case Nil => z
+      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+  def sum2(l: List[Int]) =
+    foldRight(l, 0.0)(_ + _)
+  def product2(l: List[Double]) =
+    foldRight(l, 1.0)(_ * _)
 }

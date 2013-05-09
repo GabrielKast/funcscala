@@ -58,4 +58,21 @@ object chapter3 {
     case Cons(a, Nil ) => Nil
     case Cons(a, b) => Cons(a, init(b))
   }
+
+  // Ex 9 :  Compute the length of a list using foldRight.
+  def length[A](l: List[A]): Int = List.foldRight(l, 0)((_, x) => x+1)
+
+  // Ex. 10
+  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = l match {
+    case Nil => z
+    case Cons(a, b) => foldLeft(b, f(z, a))(f)
+  }
+  
+  // ex.11 implement sum, product, llength with foldLeft
+  def sum(l:List[Int])=foldLeft(l, 0)((z, x)=>z+x)
+  def product(l:List[Double])=foldLeft(l, 1.0)((z, x)=>z*x)
+  def llength[A](l:List[A])=foldLeft(l, 0)((z, _)=>z+1)
+
+  // EXERCISE 12: Write a function that returns the reverse of a list
+  def reverse[A](l:List[A])=foldLeft(l, Nil: List[A])((z, a)=> Cons(a, z))
 }

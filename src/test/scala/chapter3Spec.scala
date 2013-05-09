@@ -78,4 +78,59 @@ class Chapter3Spec extends FunSpec {
       }
     }
   }
+
+  describe("Exercice 9 : Compute the length of a list using foldRight.") {
+    it("should give a length=0 with Nil"){
+      assert(length(Nil)===0)
+    }
+    it("should give a length=2 with List(1)"){
+      assert(length(List(1))===1)
+    }
+    it("should give a length=3 with List(1, 2, 1)"){
+      assert(length(List(1, 2, 1))===3)
+    }
+  }
+
+  describe("Ex.10&11 : foldLeft and its use") {
+    it("should return 0  when List = Nil") {
+      assert(llength(Nil)===0)
+    }
+    it("should return llength=3 when List(1, 2, 1)") {
+      assert(llength(List(1, 2, 1))===length(List(1, 2, 1)))
+      assert(llength(List(1, 2, 1))===3)
+    }
+    it("should return 4 as sum") {
+      assert(sum(List(1, 2, 1))===4)
+    }
+    it("should return 0 as sum when List is empty") {
+      assert(sum(Nil)===0)
+    }
+
+    it("should return 4 as product") {
+      assert(sum(List(1, -2, 3, -4)) === -2)
+    }
+
+    it("should return -24.0 as product") {
+      assert(product(List(1, 2, 3, -4)) === -24.0)
+    }
+
+    it("should return 0.0 as product") {
+      assert(product(List(1, 2, 0.0, -4)) === 0.0)
+    }
+    it("should return 1 as product when List is empty") {
+      assert(product(Nil)===1)
+    }
+  }
+
+  describe("Ex.12 : reverse") {
+    it("should reverse List(1, 2, 3)") {
+      assert(reverse(List(1, 2, 3))===List(3, 2, 1))
+    }
+    it("should reverse List(1)") {
+      assert(reverse(List(1))===List(1))
+    }
+    it("should reverse Nil") {
+      assert(reverse(Nil)===Nil)
+    }
+  }
 }
