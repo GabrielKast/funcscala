@@ -1,4 +1,5 @@
 funcscala
 =========
 
-Functionnal programming in Scala (The Book) - Exercices 
+Functional programming in Scala (The Book - Manning Edition) - Exercices
+
