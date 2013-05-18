@@ -133,4 +133,133 @@ class Chapter3Spec extends FunSpec {
       assert(reverse(Nil)===Nil)
     }
   }
+
+  describe ("Ex 14 : EXERCISE 14: Implement append in terms of either foldLeft or flodRight") {
+    it("should concatenate two lists") {
+      assert(appendWithFoldLeft(List(1, 2, 3), List(4, 5, 6))===List(1, 2, 3, 4, 5, 6))
+    }
+    it("should concatenate one List and Nil") {
+      assert(appendWithFoldLeft(List(1, 2, 3), Nil)===List(1, 2, 3))
+    }
+    it("should concatenate one Nil and one list") {
+      assert(appendWithFoldLeft(Nil, List(4, 5, 6))===List(4, 5, 6))
+    }
+
+    it("should concatenate two lists appendWithFoldRight") {
+      assert(appendWithFoldRight(List(1, 2, 3), List(4, 5, 6))===List(1, 2, 3, 4, 5, 6))
+    }
+    it("should concatenate one List and Nil with appendWithFoldRight") {
+      assert(appendWithFoldRight(List(1, 2, 3), Nil)===List(1, 2, 3))
+    }
+    it("should concatenate one Nil and one list withappendWithFoldRight") {
+      assert(appendWithFoldRight(Nil, List(4, 5, 6))===List(4, 5, 6))
+    }
+  }
+
+  describe("Ex.15 concat") {
+    it("should concatenate two lists"){
+      assert(concat(List(List(1, 2, 3), List(4, 5, 6)))===List(1, 2, 3, 4, 5, 6))
+    }
+    it("should concatenate three lists"){
+      assert(concat(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9)))===List(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    }
+    it("should concatenate 6 lists"){
+      assert(concat(List(List(1), List(2, 3), List(4, 5, 6), List(7), Nil, List(8, 9)))===List(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    }
+    it("should concatenate zero lists"){
+      assert(concat(Nil)===Nil)
+    }
+  }
+
+
+  describe("EXERCISE 16: a function that transforms a list of integers by adding 1") {
+    it("should add 1 to all elements"){
+      assert(add_one(List(1, 2, -3))===List(2, 3, -2))
+    }
+    it("should not break with a Nil list"){
+      assert(add_one(Nil)===Nil)
+    }
+  }
+
+  describe("EXERCISE 17: Write a function that turns each value in a List[Double] into a String.") {
+    it("should create a list of Strings"){
+      assert(doublesToStrings(List(1.0, 2.1, -3)) ===List("1.0", "2.1", "-3.0"))
+    }
+    it("should not break with a Nil list"){
+      assert(doublesToStrings(Nil: List[Double])===Nil)
+    }
+  }
+
+  describe("EXERCISE 18:map") {
+    it("should add 1 to all elements"){
+      assert(map(List(1, 2, -3)) (_+1) ===List(2, 3, -2))
+    }
+    it("should not break with a Nil list"){
+      assert(map(Nil: List[Int])(x=>x+1)===Nil)
+    }
+  }
+
+  describe("EXERCISE 19:filter") {
+    it("should get all odds number"){
+      assert(filter(List(1, 2, -3)) (x=> x%2==0) ===List(2))
+    }
+    it("should get all odds number - sample nb2"){
+      assert(filter(List(1, 2, 4)) (x=> x%2==0) ===List(2, 4))
+    }
+    it("should get all odds number - Nil result"){
+      assert(filter(List(1, 3, 5)) (x=> x%2==0) ===Nil)
+    }
+    it("should not break with a Nil list"){
+      assert(filter(Nil: List[Int])(x=>false)===Nil)
+    }
+  }
+
+  describe("Ex: 20 flatMap"){
+    it("should work as a good old flatMap") {
+      assert(flatMap(List(1,2,3))(i => List(i,i)) === List(1,1,2,2,3,3))
+    }
+  }
+
+
+  describe("EXERCISE 21:filter with a flatMap") {
+    it("should get all odds number"){
+      assert(filterWithFlatMap(List(1, 2, -3)) (x=> x%2==0) ===List(2))
+    }
+    it("should get all odds number - sample nb2"){
+      assert(filterWithFlatMap(List(1, 2, 4)) (x=> x%2==0) ===List(2, 4))
+    }
+    it("should get all odds number - Nil result"){
+      assert(filterWithFlatMap(List(1, 3, 5)) (x=> x%2==0) ===Nil)
+    }
+    it("should not break with a Nil list"){
+      assert(filterWithFlatMap(Nil: List[Int])(x=>false)===Nil)
+    }
+  }
+
+  describe("EXERCISE 22 : Construct a new list in addition of two lists") {
+    it("should give Nil if both lists are Nil") {
+      assert(addTwoLists(Nil: List[Int], Nil: List[Int])===Nil)
+    }
+    it("should add two lists") {
+      assert(addTwoLists(List(1, 2, 3), List(4, 5, 6))===List(5, 7, 9))
+    }
+    it("should add two lists even if the first one is bigger than the other") {
+      assert(addTwoLists(List(1, 2, 3, 4), List(4))===List(5, 2, 3, 4))
+    }
+    it("should add two lists even if the second one is bigger than the other") {
+      assert(addTwoLists(List(1, 2), List(4, 5, 6))===List(5, 7, 6))
+    }
+  }
+
+  describe("EXERCISE 23 : Generalize the function you just wrote so that it's not specific to integers or addition.") {
+    it("should give Nil if both lists are Nil") {
+      assert(mergeTwoLists(Nil: List[Int], Nil: List[Int])((x, y)=>x*y)===Nil)
+    }
+    it("should add two lists") {
+      assert(mergeTwoLists(List(1, 2, 3), List(4.0, 5.0, 6.1))((x, y)=>x+y)===List(5.0, 7.0, 9.1))
+    }
+    it("should multiply two lists") {
+      assert(mergeTwoLists(List(1, 2, 3), List(-1.0, -2.0, 3))((x, y)=>x*y)===List(-1.0, -4.0, 9.0))
+    }
+  }
 }
