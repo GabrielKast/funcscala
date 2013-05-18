@@ -262,4 +262,114 @@ class Chapter3Spec extends FunSpec {
       assert(mergeTwoLists(List(1, 2, 3), List(-1.0, -2.0, 3))((x, y)=>x*y)===List(-1.0, -4.0, 9.0))
     }
   }
+  describe("EXERCISE 24 : hasSubsequence") {
+    val l = List(1, 2, 3 , 4, 5)
+    it("should say that List(1, 2, 3, 4, 5) contains List(2, 3)") {
+      assert(hasSubsequence(l, List(2, 3))===true)
+    }
+    it("should say that List(1, 2, 3, 4, 5) contains List(1)") {
+      assert(hasSubsequence(l, List(1))===true)
+    }
+    it("should say that List(1, 2, 3, 4, 5) contains List(3, 4, 5)") {
+      assert(hasSubsequence(l, List(3, 4, 5))===true)
+    }
+    it("should say that List(1, 2, 3, 4, 5) not contain List(2, 5)") {
+      assert(hasSubsequence(l, List(2, 5))===false)
+    }
+    it("should say that List(1, 2, 3, 4, 5) not contain List(6)") {
+      assert(hasSubsequence(l, List(6))===false)
+    }
+  }
+
+  val t1 = Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))
+  val t2 = Branch(Branch(Leaf(2), Leaf(3)), Branch(Leaf(4), Leaf(5)))
+
+  describe("Tree : size") {
+    it("should be a tree with 5 node") {
+      assert(size(t1)===5)
+    }
+    it("should be a tree with 7 node") {
+      assert(size(t2)===7)
+    }
+    it("should be a tree with 1 node") {
+      assert(size(Leaf(1))===1)
+    }
+  }
+
+  describe("Tree : maximum") {
+    it("should find  a maximum=5") {
+      assert(maximum(t2)===5)    
+    }
+    it("should find  a maximum=1") {
+      assert(maximum(Leaf(1))===1)
+    }
+  }
+
+  describe("tree: depth") {
+    it("should be a depth=3") {
+      assert(depth(t1)===3)
+    }
+    it("should be a depth=3 v2") {
+      assert(depth(t2)===3)
+    }
+    it("should be a depth=1") {
+      assert(depth(Leaf(1))===1)
+    }
+  }
+
+  describe("tree: Map") {
+    it("should add 1 to all the elements of the tree") {
+      val expected = Branch(Branch(Leaf(3), Leaf(4)), Branch(Leaf(5), Leaf(6)))
+      assert(treeMap(t2)(_+1)===expected)
+    }
+    it("should transform all the Int into string ") {
+      val expected = Branch(Branch(Leaf("2"), Leaf("3")), Branch(Leaf("4"), Leaf("5")))
+      assert(treeMap(t2)(_.toString)===expected)
+    }
+  }
+
+  describe("Tree : sizeWithFold") {
+    it("should be a tree with 5 node") {
+      assert(sizeWithFold(t1)===5)
+    }
+    it("should be a tree with 7 node") {
+      assert(sizeWithFold(t2)===7)
+    }
+    it("should be a tree with 1 node") {
+      assert(sizeWithFold(Leaf(1))===1)
+    }
+  }
+
+
+  describe("Tree : maxWithFold") {
+    it("should find  a maxWithFold=5") {
+      assert(maxWithFold(t2)===5)    
+    }
+    it("should find  a maxWithFold=1") {
+      assert(maxWithFold(Leaf(1))===1)
+    }
+  }
+
+  describe("tree: depthWithFold") {
+    it("should be a depthWithFold=3") {
+      assert(depthWithFold(t1)===3)
+    }
+    it("should be a depthWithFold=3 v2") {
+      assert(depthWithFold(t2)===3)
+    }
+    it("should be a depthWithFold=1") {
+      assert(depthWithFold(Leaf(1))===1)
+    }
+  }  
+
+  describe("tree: MapWithFold") {
+    it("should add 1 to all the elements of the tree") {
+      val expected = Branch(Branch(Leaf(3), Leaf(4)), Branch(Leaf(5), Leaf(6)))
+      assert(mapWithFold(t2)(_+1)===expected)
+    }
+    it("should transform all the Int into string ") {
+      val expected = Branch(Branch(Leaf("2"), Leaf("3")), Branch(Leaf("4"), Leaf("5")))
+      assert(mapWithFold(t2)(_.toString)===expected)
+    }
+  }
 }

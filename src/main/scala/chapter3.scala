@@ -143,4 +143,70 @@ object chapter3 {
       Cons(f(a, b), mergeTwoLists(taila, tailb)(f))
     case _ => throw new UnsupportedOperationException
   }
+
+  // EXERCISE 24 (hard): As an example, implement hasSubsequence for checking whether a List contains another List as a subsequence. For instance, List(1,2,3,4) would have List(1,2), List(2,3), and List(4) as subsequences, among others. You may have some difficulty finding a concise purely functional implementation that is also efficient. That's okay. Implement the function however comes most naturally. We will return to this implementation in a couple of chapters and hopefully improve on it. Note: any two values, x, and y, can be compared for equality in Scala using the expression x == y.
+  def hasSubsequence[A](l: List[A], sub: List[A]): Boolean = {
+    def subsequence(l1: List[A], sub1: List[A]): Boolean = 
+      (l1, sub1) match {
+	case (_, Nil) => true
+	case (Nil, _) => false
+	case (Cons(a1, tail1), Cons(a2, tail2)) if a1==a2 => 
+	  subsequence(tail1, tail2)
+	case (Cons(a1, tail1), _) => subsequence(tail1, sub)
+      }
+    subsequence(l, sub)
+  }
+
+
+  //================================================================
+  sealed trait Tree[+A]
+  case class Leaf[A](value: A) extends Tree[A]
+  case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
+
+  // EXERCISE 25: Write a function size that counts the number of nodes in a tree.
+  def size[A](t:Tree[A]): Int= t match {
+    case Leaf(_) => 1
+    case Branch(left, right) => 1+size(left)+size(right)
+  }
+
+  // EXERCISE 26: Write a function maximum that returns the maximum element in a Tree[Int]. (Note: in Scala, you can use x.max(y) or x max y to compute the maximum of two integers x and y.)
+  def maximum(t: Tree[Int]): Int= t match {
+      case Leaf(v) => v
+      case Branch(left, right) => 
+	val maxLeft = maximum(left)
+	val maxRight = maximum(right)
+	if (maxLeft>maxRight) maxLeft else maxRight
+  }
+  // EXERCISE 27: Write a function depth that returns the maximum path length from the root of a tree to any leaf.
+  def depth[A](t:Tree[A]): Int= t match {
+    case Leaf(_)=>1
+    case Branch(left, right)=>
+	val depthLeft = 1+depth(left)
+	val depthRight = 1+depth(right)
+	if (depthLeft>depthRight) depthLeft else depthRight
+  }
+
+  // EXERCISE 28: Write a function map, analogous to the method of the same name on List, that modifies each element in a tree with a given function.
+  def treeMap[A, B](t:Tree[A])(f: A=>B): Tree[B]=t match {
+    case Leaf(a) => Leaf(f(a))
+    case Branch(left, right) => Branch(treeMap(left)(f), treeMap(right)(f))
+  }
+
+// EXERCISE 29: Generalize size, maximum, depth, and map, writing a new function fold that abstracts over their similarities. Reimplement them in terms of this more general function. Can you draw an analogy between this fold function and the left and right folds for List?
+  def fold[A, B](t:Tree[A])(tMap:A=>B)(tReduce:(B, B)=>B): B= t match {
+    case Leaf(v)=>tMap(v)
+    case Branch(left, right)=>
+      tReduce(fold(left)(tMap)(tReduce), fold(right)(tMap)(tReduce))
+  }
+
+  def sizeWithFold [A](t: Tree[A]): Int=
+    fold(t)(_ => 1 )(1+ _ + _ ) 
+  def maxWithFold(t: Tree[Int]): Int=
+    fold(t)((x: Int)=>x)((x: Int, y: Int)=> if (x>y) x else y)
+  def depthWithFold[A](t: Tree[A]): Int=
+    fold(t)(_=> 1 )((x: Int, y: Int)=> 1+ (if (x>y) x else y))
+  def mapWithFold[A, B](t: Tree[A])(f: A=>B): Tree[B]=
+    fold(t)(a => Leaf(f(a)): Tree[B])((x: Tree[B], y:Tree[B]) => Branch(x, y))
+
+
 }
